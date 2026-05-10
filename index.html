@@ -174,7 +174,7 @@
 <body>
 <!-- NAV -->
 <nav>
-<a class="logo" href="#hero" id="logo-text">Доктор <span>Рафальський</span></a>
+<a class="logo" href="#hero" id="logo-text">Лікар <span>Рафальський</span></a>
 <ul class="nav-links">
 <li><a data-i18n="nav_services" href="#services">Послуги</a></li>
 <li><a data-i18n="nav_about" href="#about">Про мене</a></li>
@@ -466,7 +466,7 @@ function setLang(l) {
     const t = T[l];
     document.documentElement.lang = l;
     document.title = l==='en' ? 'Rafalsky Stanislav | Cardiologist' : 'Рафальський Станіслав | Кардіолог';
-    document.getElementById('logo-text').innerHTML = l==='en' ? 'Dr. <span>Rafalsky</span>' : 'Доктор <span>Рафальський</span>';
+    document.getElementById('logo-text').innerHTML = l==='en' ? 'Dr. <span>Rafalsky</span>' : 'Лікар <span>Рафальський</span>';
     document.getElementById('card-avatar').textContent = l==='en' ? 'SR' : 'СР';
     document.getElementById('footer-text').innerHTML = t.footer;
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -563,7 +563,7 @@ function applyLang(l) {
   const t = T[l];
   document.documentElement.lang = l;
   document.title = l==='en' ? 'Rafalsky Stanislav | Cardiologist' : 'Рафальський Станіслав | Кардіолог';
-  document.getElementById('logo-text').innerHTML = l==='en' ? 'Dr. <span>Rafalsky</span>' : 'Доктор <span>Рафальський</span>';
+  document.getElementById('logo-text').innerHTML = l==='en' ? 'Dr. <span>Rafalsky</span>' : 'Лікар <span>Рафальський</span>';
   document.getElementById('card-avatar').textContent = l==='en' ? 'SR' : 'СР';
   document.getElementById('footer-text').innerHTML = t.footer;
   document.querySelectorAll('[data-i18n]').forEach(el => {
