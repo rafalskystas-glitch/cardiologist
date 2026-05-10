@@ -486,17 +486,56 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ── FORM ── */
-function submitForm(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  if(!name||!phone){alert(T[lang].alert);return;}
-  const toast=document.getElementById('toast');
-  toast.innerHTML=T[lang].toast; toast.style.display='block';
-  ['f-name','f-surname','f-phone','f-date','f-service','f-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  setTimeout(()=>toast.style.display='none',5000);
+async function submitForm(){
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  if(!name || !phone){ alert(T[lang].alert); return; }
+
+  const btn = document.querySelector('#booking .btn');
+  btn.disabled = true;
+  btn.innerHTML = lang==='uk' ? 'Надсилання...' : 'Sending...';
+
+  const formData = {
+    access_key: 'ВАШ_КЛЮЧ',          // ← вставте сюди ключ з Web3Forms
+    subject: 'Новий запис на прийом — Dr. Rafalsky',
+    from_name: 'Сайт dr.rafalsky',
+    name:    name,
+    surname: document.getElementById('f-surname').value.trim(),
+    phone:   phone,
+    date:    document.getElementById('f-date').value,
+    service: document.getElementById('f-service').value,
+    message: document.getElementById('f-msg').value.trim(),
+  };
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    const data = await res.json();
+
+    if(data.success){
+      const toast = document.getElementById('toast');
+      toast.innerHTML = T[lang].toast;
+      toast.style.display = 'block';
+      ['f-name','f-surname','f-phone','f-date','f-service','f-msg']
+        .forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+      setTimeout(()=> toast.style.display='none', 6000);
+    } else {
+      alert(lang==='uk'
+        ? 'Помилка відправки. Спробуйте ще раз або зателефонуйте нам.'
+        : 'Submission failed. Please try again or call us directly.');
+    }
+  } catch(e) {
+    alert(lang==='uk'
+      ? 'Помилка з\'єднання. Перевірте інтернет та спробуйте ще раз.'
+      : 'Connection error. Please check your internet and try again.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = T[lang].f_submit;
+  }
 }
-const di=document.getElementById('f-date');
-if(di) di.min=new Date().toISOString().split('T')[0];
 
 /* ── INIT: apply Ukrainian on load without fade ── */
 function applyLang(l) {
